@@ -19,7 +19,7 @@ class ShareButton extends Widget
     const LAYOUT_BOX_COUNT = 'box_count';
     const LAYOUT_BUTTON_COUNT = 'button_count';
 
-    public $size = self::SIZE_LARGE;
+    public $size = self::SIZE_SMALL;
     public $layout = self::LAYOUT_BUTTON_COUNT;
     public $mobileIframe = true;
 
@@ -30,13 +30,14 @@ class ShareButton extends Widget
     protected $url = null;
     protected $meta = [];
     protected $query = 'https://www.facebook.com/sharer/sharer?';
+    protected $language = 'en_US';
 
     /**
      * @inheritdoc
      */
     public function init()
     {
-        $this->url = Yii::$app->request->url;
+        $this->url = Yii::$app->request->absoluteUrl;
         $this->query .= http_build_query([
             'u' => $this->url,
             'src' => 'sdkpreparse',
@@ -49,6 +50,8 @@ class ShareButton extends Widget
             'og:description' => StringHelper::truncate(HtmlPurifier::process($this->description), 255),
             'og:image'       => $this->image,
         ];
+
+        $this->language = str_replace('-', '_', Yii::$app->language);
     }
 
     /**
@@ -63,6 +66,8 @@ class ShareButton extends Widget
             'layout'       => $this->layout,
             'mobileIframe' => $this->mobileIframe,
             'meta'         => $this->meta,
+            'query'        => $this->query,
+            'language'     => $this->language,
         ]);
     }
 
