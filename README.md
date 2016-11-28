@@ -28,4 +28,12 @@ Usage
 Once the extension is installed, simply use it in your code by  :
 
 ```php
-<?= \westside\facebook\AutoloadExample::widget(); ?>```
+<?= \westside\facebook\ShareButton::widget([
+    'title' => 'Some Title',
+    'image' => 'file.url',
+    'description => 'Some Description',
+    //'size' => self::SIZE_SMALL,
+    //'layout' => selft::LAYOUT_BUTTON_COUNT,
+    //'mobileIframe' => true,
+]); ?>
+```
